@@ -3,12 +3,12 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 
 const faqs = [
   {
-    question: "What is CompanyFlow?",
-    answer: "CompanyFlow is an all-in-one CRM and marketing automation platform designed specifically for companies to manage leads, automate follow-ups, and scale their business without juggling multiple tools."
+    question: "What is SynapseHub?",
+    answer: "SynapseHub is an all-in-one CRM and marketing automation platform designed specifically for companies to manage leads, automate follow-ups, and scale their business without juggling multiple tools."
   },
   {
     question: "Can I replace my current CRM?",
-    answer: "Absolutely. CompanyFlow includes a full-featured CRM, pipeline management, email marketing, SMS automation, and funnel builder. Most of our users replace 3-5 other software subscriptions."
+    answer: "Absolutely. SynapseHub includes a full-featured CRM, pipeline management, email marketing, SMS automation, and funnel builder. Most of our users replace 3-5 other software subscriptions."
   },
   {
     question: "Is there a setup fee?",
@@ -24,7 +24,7 @@ const faqs = [
   },
   {
     question: "Is it GDPR compliant?",
-    answer: "Yes, CompanyFlow is fully GDPR compliant. We take data security seriously and provide all the tools you need to manage your clients' data responsibly."
+    answer: "Yes, SynapseHub is fully GDPR compliant. We take data security seriously and provide all the tools you need to manage your clients' data responsibly."
   }
 ];
 
@@ -36,7 +36,7 @@ export default function FAQ() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-white mb-4">Frequently Asked Questions</h2>
-          <p className="text-slate-400">Everything you need to know about CompanyFlow.</p>
+          <p className="text-slate-400">Everything you need to know about SynapseHub.</p>
         </div>
 
         <div className="space-y-4">

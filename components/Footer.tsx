@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart2, Twitter, Facebook, Instagram, Linkedin } from 'lucide-react';
+import { Twitter, Facebook, Instagram, Linkedin } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -8,10 +8,31 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <div className="col-span-1 md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="bg-gradient-to-br from-blue-600 to-purple-600 p-1.5 rounded-lg shadow-lg">
-                <BarChart2 className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-lg font-bold text-white tracking-tight">CompanyFlow</span>
+               <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="logo-3d-spin">
+                 <defs>
+                   <linearGradient id="logoGradientFooter" x1="0%" y1="0%" x2="100%" y2="100%">
+                     <stop offset="0%" stopColor="#3b82f6" />
+                     <stop offset="100%" stopColor="#8b5cf6" />
+                   </linearGradient>
+                 </defs>
+                 <path d="M50 50 L50 15" stroke="url(#logoGradientFooter)" strokeWidth="4" strokeLinecap="round"/>
+                 <path d="M50 50 L80.3 32.5" stroke="url(#logoGradientFooter)" strokeWidth="4" strokeLinecap="round"/>
+                 <path d="M50 50 L80.3 67.5" stroke="url(#logoGradientFooter)" strokeWidth="4" strokeLinecap="round"/>
+                 <path d="M50 50 L50 85" stroke="url(#logoGradientFooter)" strokeWidth="4" strokeLinecap="round"/>
+                 <path d="M50 50 L19.7 67.5" stroke="url(#logoGradientFooter)" strokeWidth="4" strokeLinecap="round"/>
+                 <path d="M50 50 L19.7 32.5" stroke="url(#logoGradientFooter)" strokeWidth="4" strokeLinecap="round"/>
+
+                 <path d="M50 15 L80.3 32.5 L80.3 67.5 L50 85 L19.7 67.5 L19.7 32.5 Z" stroke="url(#logoGradientFooter)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+
+                 <circle cx="50" cy="50" r="8" fill="url(#logoGradientFooter)" stroke="none" />
+                 <circle cx="50" cy="15" r="5" fill="#020617" stroke="url(#logoGradientFooter)" strokeWidth="4" />
+                 <circle cx="80.3" cy="32.5" r="5" fill="#020617" stroke="url(#logoGradientFooter)" strokeWidth="4" />
+                 <circle cx="80.3" cy="67.5" r="5" fill="#020617" stroke="url(#logoGradientFooter)" strokeWidth="4" />
+                 <circle cx="50" cy="85" r="5" fill="#020617" stroke="url(#logoGradientFooter)" strokeWidth="4" />
+                 <circle cx="19.7" cy="67.5" r="5" fill="#020617" stroke="url(#logoGradientFooter)" strokeWidth="4" />
+                 <circle cx="19.7" cy="32.5" r="5" fill="#020617" stroke="url(#logoGradientFooter)" strokeWidth="4" />
+              </svg>
+              <span className="text-xl font-bold text-white tracking-tight">Synapse<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Hub</span></span>
             </div>
             <p className="text-sm leading-relaxed mb-4 text-slate-500">
               The all-in-one platform for marketing companies. Scale your business without the tech headaches.
@@ -58,7 +79,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-slate-900 pt-8 text-sm text-center text-slate-600">
-          &copy; {new Date().getFullYear()} CompanyFlow Inc. All rights reserved.
+          &copy; {new Date().getFullYear()} SynapseHub Inc. All rights reserved.
         </div>
       </div>
     </footer>

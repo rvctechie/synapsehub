@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CompanyFlow - All-In-One Marketing Platform</title>
+    <title>SynapseHub - All-In-One Marketing Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -19,6 +19,16 @@
       }
       .hero-gradient {
         background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.15) 0%, rgba(2, 6, 23, 0) 50%);
+      }
+      /* 3D Spin Animation */
+      .logo-3d-spin {
+        animation: spin-3d 12s linear infinite;
+        transform-origin: center;
+        transform-box: fill-box;
+      }
+      @keyframes spin-3d {
+        0% { transform: perspective(1000px) rotateY(0deg); }
+        100% { transform: perspective(1000px) rotateY(-360deg); }
       }
     </style>
   <script type="importmap">
