@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageSquare, Calendar, Star, PhoneMissed, ArrowRight, Layout, BarChart3, Smartphone } from 'lucide-react';
+import { MessageSquare, Calendar, Star, PhoneMissed, Layout, BarChart3, Smartphone } from 'lucide-react';
 
 const features = [
   {

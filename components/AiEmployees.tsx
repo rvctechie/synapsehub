@@ -1,5 +1,5 @@
 import React from 'react';
-import { Magnet, MessageCircle, CreditCard, ArrowRight, Zap, Repeat } from 'lucide-react';
+import { Magnet, MessageCircle, CreditCard, Zap, Repeat } from 'lucide-react';
 
 export default function AiEmployees() {
   return (

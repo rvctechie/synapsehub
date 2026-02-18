@@ -1,6 +1,6 @@
 import React from 'react';
 import { AreaChart, Area, ResponsiveContainer, XAxis, YAxis, Tooltip, BarChart, Bar, CartesianGrid } from 'recharts';
-import { Users, Mail, DollarSign, Calendar, Search, Bell, Settings, MessageSquare, ChevronDown, Plus, Filter } from 'lucide-react';
+import { Users, Mail, DollarSign, Calendar, Settings, MessageSquare, ChevronDown, Plus, Filter } from 'lucide-react';
 
 const areaData = [
   { name: 'Mon', value: 2400 },
@@ -126,8 +126,8 @@ export default function DashboardPreview() {
                             <h3 className="font-semibold text-white text-sm">Revenue Growth</h3>
                             <Filter className="w-4 h-4 text-slate-500 cursor-pointer hover:text-slate-300" />
                         </div>
-                        <div className="h-64 w-full">
-                            <ResponsiveContainer width="100%" height="100%">
+                        <div className="h-64 w-full min-w-0">
+                            <ResponsiveContainer width="99%" height="100%">
                             <AreaChart data={areaData}>
                                 <defs>
                                 <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
@@ -153,8 +153,8 @@ export default function DashboardPreview() {
                             <h3 className="font-semibold text-white text-sm">Lead Sources</h3>
                             <Settings className="w-4 h-4 text-slate-500 cursor-pointer hover:text-slate-300" />
                         </div>
-                        <div className="h-64 w-full">
-                            <ResponsiveContainer width="100%" height="100%">
+                        <div className="h-64 w-full min-w-0">
+                            <ResponsiveContainer width="99%" height="100%">
                                 <BarChart data={barData} layout="vertical">
                                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" horizontal={false} />
                                 <XAxis type="number" axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 11}} hide />

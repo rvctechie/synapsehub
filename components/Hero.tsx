@@ -1,7 +1,11 @@
 import React from 'react';
-import { ArrowRight, ChevronRight, PlayCircle } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
-export default function Hero() {
+interface HeroProps {
+  onOpenChat?: () => void;
+}
+
+export default function Hero({ onOpenChat }: HeroProps) {
   return (
     <section className="relative pt-40 pb-32 lg:pt-48 lg:pb-40 overflow-hidden bg-slate-950">
       {/* Sophisticated Background */}
@@ -34,31 +38,28 @@ export default function Hero() {
         </p>
         
         {/* CTA Area */}
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-          <button className="w-full sm:w-auto px-8 h-14 bg-white text-slate-950 rounded-lg font-bold text-base hover:bg-slate-100 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.2)] flex items-center justify-center gap-2">
-            Start Free Trial <ArrowRight className="w-4 h-4"/>
-          </button>
+        <div className="flex justify-center items-center">
           
-          {/* Enhanced Talk Now Widget */}
-          <button className="w-full sm:w-auto h-14 pl-2 pr-6 bg-slate-900/50 backdrop-blur-sm text-white border border-slate-700 hover:border-slate-500 rounded-lg font-medium text-base transition-all flex items-center justify-start gap-3 group hover:bg-slate-800/50">
+          {/* Enhanced Talk Now Widget - Centered & Larger */}
+          <button 
+            onClick={onOpenChat}
+            className="relative pl-3 pr-10 py-3 bg-slate-900/80 backdrop-blur-md text-white border border-slate-700 hover:border-blue-500/50 rounded-2xl font-medium transition-all duration-300 flex items-center gap-5 group hover:bg-slate-800 hover:shadow-[0_0_40px_rgba(59,130,246,0.2)] hover:-translate-y-1"
+          >
             <div className="relative">
                 <img 
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80" 
-                    alt="Sales Representative"
-                    className="w-10 h-10 rounded-md border border-slate-600 group-hover:border-slate-400 transition-colors object-cover" 
+                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                    alt="Support Agent"
+                    className="w-20 h-20 rounded-xl border-2 border-slate-600 group-hover:border-blue-400 transition-colors object-cover shadow-2xl" 
                 />
-                <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 border-2 border-slate-900 rounded-full"></span>
+                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-emerald-500 border-4 border-slate-900 rounded-full animate-pulse shadow-[0_0_15px_rgba(16,185,129,0.6)]"></span>
             </div>
             <div className="text-left flex flex-col justify-center">
-                <span className="text-[10px] text-green-400 font-bold uppercase tracking-wider leading-none mb-1">Online Now</span>
-                <span className="leading-none group-hover:text-blue-200 transition-colors">Talk to Sales</span>
+                <span className="text-xs text-emerald-400 font-bold uppercase tracking-widest leading-none mb-2">Online Now</span>
+                <span className="leading-none text-2xl group-hover:text-blue-200 transition-colors font-bold tracking-tight">Talk to Support</span>
+                <span className="text-slate-400 text-sm mt-1 group-hover:text-slate-300">Wait time: &lt; 1 min</span>
             </div>
           </button>
         </div>
-        
-        <p className="mt-8 text-sm text-slate-500 font-medium">
-          No credit card required for trial • Cancel anytime • 24/7 Support
-        </p>
       </div>
     </section>
   );

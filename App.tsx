@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { X } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Features from './components/Features';
@@ -12,12 +13,15 @@ import ChatWidget from './components/ChatWidget';
 import DashboardPreview from './components/DashboardPreview';
 
 export default function App() {
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-blue-500/30">
       <Navbar />
       
       <main>
-        <Hero />
+        <Hero onOpenChat={() => setIsChatOpen(true)} />
         
         <DashboardPreview />
         
@@ -80,20 +84,55 @@ export default function App() {
                Join the fastest growing community of digital marketers and business owners consolidating their tech stack today.
              </p>
              <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <button className="bg-white text-slate-950 px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-50 transition-colors shadow-xl hover:shadow-2xl hover:shadow-blue-900/20 transform hover:-translate-y-1">
-                  Start Your 14-Day Free Trial
-                </button>
-                <button className="px-8 py-4 rounded-lg font-bold text-lg text-white border border-slate-700 hover:bg-slate-800 transition-colors">
-                  View Demo
+                <button 
+                  onClick={() => setIsChatOpen(true)}
+                  className="relative pl-3 pr-10 py-3 bg-slate-900/80 backdrop-blur-md text-white border border-slate-700 hover:border-blue-500/50 rounded-2xl font-medium transition-all duration-300 flex items-center gap-5 group hover:bg-slate-800 hover:shadow-[0_0_40px_rgba(59,130,246,0.2)] hover:-translate-y-1"
+                >
+                    <div className="relative">
+                        <img 
+                            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                            alt="Support Agent"
+                            className="w-20 h-20 rounded-xl border-2 border-slate-600 group-hover:border-blue-400 transition-colors object-cover shadow-2xl" 
+                        />
+                        <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-emerald-500 border-4 border-slate-900 rounded-full animate-pulse shadow-[0_0_15px_rgba(16,185,129,0.6)]"></span>
+                    </div>
+                    <div className="text-left flex flex-col justify-center">
+                        <span className="text-xs text-emerald-400 font-bold uppercase tracking-widest leading-none mb-2">Online Now</span>
+                        <span className="leading-none text-2xl group-hover:text-blue-200 transition-colors font-bold tracking-tight">Talk to Support</span>
+                        <span className="text-slate-400 text-sm mt-1 group-hover:text-slate-300">Wait time: &lt; 1 min</span>
+                    </div>
                 </button>
              </div>
-             <p className="mt-8 text-sm text-slate-500 font-medium">No credit card required • Cancel anytime</p>
           </div>
         </section>
       </main>
 
       <Footer />
-      <ChatWidget />
+      <ChatWidget isOpen={isChatOpen} onToggle={setIsChatOpen} />
+
+      {/* Video Modal */}
+      {isVideoOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+          <div className="relative w-full max-w-6xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-slate-800">
+             <button 
+               onClick={() => setIsVideoOpen(false)}
+               className="absolute top-4 right-4 z-20 bg-black/50 hover:bg-slate-800 text-white p-2 rounded-full transition-colors border border-white/10"
+             >
+               <X className="w-6 h-6" />
+             </button>
+             <iframe 
+               width="100%" 
+               height="100%" 
+               src="https://www.youtube.com/embed/D5VN56jQMWM?autoplay=1&mute=1&modestbranding=1&rel=0" 
+               title="Platform Demo" 
+               frameBorder="0" 
+               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+               allowFullScreen
+               className="w-full h-full"
+             ></iframe>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
