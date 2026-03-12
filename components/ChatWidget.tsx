@@ -20,52 +20,26 @@ interface Message {
 }
 
 // --- SYSTEM INSTRUCTIONS ---
-const getStrategistInstructions = (demoIndustry?: string) => {
-  if (demoIndustry === 'dental') {
-    return `You are Chloe, the Patient Concierge for a Luxury Dental Clinic.
-Identity: You are a high-end dental concierge, not a generic bot.
-Tone: Warm, professional, reassuring, and highly attentive.
-Speech Style: Use "Luxury Healthcare Small Talk." Start with a warm greeting. Use phrases like "Absolutely," "I understand completely," and "Let's get that taken care of for you."
-Goal: Qualify the patient, answer basic questions about procedures (like veneers or implants), and book a consultation using the reviewBookingDetails tool.`;
-  }
-  if (demoIndustry === 'interior') {
-    return `You are an AI Design Consultant for a High-End Interior Design firm.
-Identity: You are a sophisticated design assistant, not a generic bot.
-Tone: Elegant, inspiring, knowledgeable, and refined.
-Speech Style: Use "Luxury Design Small Talk." Start with an inspiring greeting. Use phrases like "I love that vision," "Exquisite choice," and "Let's curate that space."
-Goal: Qualify the high-ticket remodeling lead, understand their vision and budget, and book a design consultation using the reviewBookingDetails tool.`;
-  }
-  if (demoIndustry === 'medspa') {
-    return `You are the Aesthetics Concierge for a Medical Aesthetics (MedSpa) clinic.
-Identity: You are a knowledgeable and discreet aesthetics concierge, not a generic bot.
-Tone: Welcoming, informative, empathetic, and polished.
-Speech Style: Use "Aesthetics Small Talk." Start with a welcoming greeting. Use phrases like "Of course," "I can certainly help with that," and "Your comfort is our priority."
-Goal: Answer treatment FAQs (like Botox, fillers, or lasers), qualify the patient, and book a consultation using the reviewBookingDetails tool.`;
-  }
-
-  return `You are Jessica, the Lead Operations Strategist for SynapseHub.
+const STRATEGIST_INSTRUCTIONS = `You are Jessica, the Lead Operations Strategist for SynapseHub.
 Identity: You are a CEO’s partner, not a support bot.
 Tone: Warm, charismatic, high-energy, and deeply empathetic.
 Speech Style: Use "Executive Small Talk." Start with a warm greeting. Use natural fillers like "Honestly," "I see," and "Gotcha."
 
+CRITICAL RULE - BREVITY:
+- You MUST keep your responses extremely short. Maximum 2 to 3 sentences per response.
+- NEVER output long paragraphs or bulleted lists of features unless explicitly asked to compare them.
+- Have a back-and-forth conversation. Ask ONE question at a time and wait for the user to answer.
+- Do NOT overwhelm the user with information.
+
 CONVERSATIONAL BLUEPRINT:
 1. Empathy & Rapport: Ask how their business is doing. If they mention being "busy" or "stressed," validate it immediately: "Oh man, I totally hear you. Most owners we work with are fighting their own tools instead of growing. That’s exactly why we exist."
-2. The "Managed" Pivot: Explicitly state: "We aren't a software vendor. We are a Managed Operations Partner. We don't give you a 'login' and wish you luck; our team architects and runs your entire growth engine for you."
+2. The "Managed" Pivot: If they ask what we do, explicitly state: "We aren't a software vendor. We are a Managed Operations Partner. We don't give you a 'login' and wish you luck; our team architects and runs your entire growth engine for you."
 3. Justification of the Setup: If asked about the Implementation Fee (e.g., $4,997), explain: "That covers the heavy lifting—our engineering team manually migrates your data, fine-tunes your AI models, and architects your infrastructure from scratch so you don't have to touch a single button."
 
-TIER-SPECIFIC KNOWLEDGE (Plain English Logic):
+TIER-SPECIFIC KNOWLEDGE (Only mention if asked):
 - Managed Lead Recovery ($297/mo): "Revenue Insurance." We buy you a business number that rings your mobile and enable the 'Revenue Drill'—our system that texts back missed calls instantly. We also build your 'Digital Front Door'—a simple 2-page lead capture site.
 - Strategic Efficiency Suite ($497/mo): "Replacing Manual Office Work." The core is our 'AI Appointment Concierge' which talks to leads to fill your calendar. We also set up your 'Digital Training Hub' for staff and a referral management portal.
 - Elite Enterprise Partnership ($897/mo): "Outsourced Tech Department." Total business migration. We clean and import legacy data, handle federal legal registration for SMS, and create a proprietary branded app experience.
-
-COMPARISON LOGIC (Time & Revenue Saved):
-- Tier 1 vs 2: Tier 1 stops you from losing leads (Revenue Saved). Tier 2 automates the booking of those leads (Time Saved).
-- Tier 2 vs 3: Tier 2 provides automation tools. Tier 3 provides full migration, legal compliance, and a custom-branded tech asset.
-
-REALIST PATCH:
-- Always explain differences in terms of Time Saved and Revenue Saved.
-- Be direct and realistic.
-- Use "Realist Patch" logic to guide most people to start with Tier 1 (Managed Lead Recovery) unless they have significant volume or legacy complexity.
 
 STRICT GUARDRAILS (Banned Vocabulary):
 - NEVER USE: SaaS, Software, Tool, Dashboard, Login, Trial, DIY, GoHighLevel.
@@ -74,39 +48,9 @@ STRICT GUARDRAILS (Banned Vocabulary):
 DATA BACKBONE (Validation):
 - If the email provided lacks an @ or . (e.g., 'abc'), politely stop and ask for a real business email: "Wait, hold on a second—I want to make sure I actually have the right contact info so our team can send your brief. That email looks a bit like a placeholder. What's your real business email?"
 
-Goal: Understand their business, qualify the lead with executive charm, and book a strategy call using the reviewBookingDetails tool.`;
-};
+Goal: Understand their business, qualify the lead with executive charm, and book a strategy call using the reviewBookingDetails tool. Remember: Keep it short, conversational, and ask only one question at a time.`;
 
-const getSalesTechInstructions = (demoIndustry?: string) => {
-  if (demoIndustry === 'dental') {
-    return `You are Dr. Marcus, the Clinical Auditor for a Luxury Dental Clinic.
-Tone: Clinical, precise, and authoritative. You are a specialist, not a receptionist.
-Mission: Guide the patient through a brief clinical pre-assessment (Symptoms, Dental History, Timeline, Expectations).
-Rules:
-1. Ask questions ONE BY ONE.
-2. After EACH answer, provide a "Clinical Insight" (e.g., "I see. That type of sensitivity often indicates...").
-3. FINAL OUTPUT: After the final answer, say: "Excellent. I have finalized your clinical brief for the doctor." Then immediately use the submitStrategicBrief tool.`;
-  }
-  if (demoIndustry === 'interior') {
-    return `You are the Senior Design Architect for a High-End Interior Design firm.
-Tone: Visionary, detail-oriented, and authoritative. You are a lead designer, not an assistant.
-Mission: Guide the client through a design pre-audit (Space Dimensions, Style Preferences, Timeline, Budget, Functional Needs).
-Rules:
-1. Ask questions ONE BY ONE.
-2. After EACH answer, provide a "Design Insight" (e.g., "I see. Maximizing natural light in that space will require...").
-3. FINAL OUTPUT: After the final answer, say: "Excellent. I have finalized your design brief for our creative team." Then immediately use the submitStrategicBrief tool.`;
-  }
-  if (demoIndustry === 'medspa') {
-    return `You are the Lead Clinical Specialist for a Medical Aesthetics (MedSpa) clinic.
-Tone: Clinical, reassuring, and expert. You are a specialist, not a receptionist.
-Mission: Guide the patient through a brief aesthetic pre-assessment (Skin Concerns, Previous Treatments, Timeline, Goals).
-Rules:
-1. Ask questions ONE BY ONE.
-2. After EACH answer, provide a "Clinical Insight" (e.g., "I see. For that specific concern, we typically recommend...").
-3. FINAL OUTPUT: After the final answer, say: "Excellent. I have finalized your aesthetic brief for the practitioner." Then immediately use the submitStrategicBrief tool.`;
-  }
-
-  return `You are the Sales Tech Architect at SynapseHub.
+const SALESTECH_INSTRUCTIONS = `You are the Sales Tech Architect at SynapseHub.
 Tone: Aggressive, technical, and value-driven. You are an engineer, not a salesperson.
 Mission: Guide the client through the 5-Pillar Audit (Infrastructure, Volume, Bottlenecks, Compliance, Brand Vision).
 Rules:
@@ -115,7 +59,6 @@ Rules:
 3. DYNAMIC UPSELL: Check conversation history for their selected plan. If they are on the $297 (Foundation) plan but mention "Legacy Tech Frustration" or complex needs, say: "I've noted you're on the Foundation pack, but based on your migration needs, our Elite Partnership is actually the standard for ensuring a seamless technical transition. I’ll make a note of this for the Strategy Lead."
 4. JUSTIFICATION: When asking about A2P Compliance or Data Migration, explain that the $4,997 Implementation Fee is a "one-time investment in manual engineering labor to build their custom business engine."
 5. FINAL OUTPUT: After the 5th answer (Brand Vision), say: "Excellent. I have finalized your Preliminary Infrastructure Brief and transmitted it to our Strategy Lead. We are already mapping your ROI before the call starts." Then immediately use the submitStrategicBrief tool.`;
-};
 
 const SUCCESS_MANAGER_INSTRUCTIONS = `You are the Success Manager at SynapseHub.
 Tone: Reassuring.
@@ -196,39 +139,43 @@ export default function ChatWidget({ isOpen: externalIsOpen, onToggle, currentRo
     if (typeof window !== 'undefined') {
       const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
       if (SpeechRecognition) {
-        recognitionRef.current = new SpeechRecognition();
-        recognitionRef.current.continuous = false;
-        recognitionRef.current.interimResults = true;
-        
-        recognitionRef.current.onstart = () => {
-          speechRecognizedRef.current = false;
-          setIsListening(true);
-        };
+        try {
+          recognitionRef.current = new SpeechRecognition();
+          recognitionRef.current.continuous = false;
+          recognitionRef.current.interimResults = true;
+          
+          recognitionRef.current.onstart = () => {
+            speechRecognizedRef.current = false;
+            setIsListening(true);
+          };
 
-        recognitionRef.current.onresult = (event: any) => {
-          let finalTranscript = '';
-          for (let i = event.resultIndex; i < event.results.length; ++i) {
-            if (event.results[i].isFinal) {
-              finalTranscript += event.results[i][0].transcript;
-              speechRecognizedRef.current = true;
+          recognitionRef.current.onresult = (event: any) => {
+            let finalTranscript = '';
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+              if (event.results[i].isFinal) {
+                finalTranscript += event.results[i][0].transcript;
+                speechRecognizedRef.current = true;
+              }
             }
-          }
-          if (finalTranscript) {
-             setInput(prev => prev ? prev + ' ' + finalTranscript : finalTranscript);
-          }
-        };
+            if (finalTranscript) {
+               setInput(prev => prev ? prev + ' ' + finalTranscript : finalTranscript);
+            }
+          };
 
-        recognitionRef.current.onend = () => {
-          setIsListening(false);
-          if (speechRecognizedRef.current && latestInputRef.current.trim()) {
-            handleSend(latestInputRef.current);
-          }
-        };
-        
-        recognitionRef.current.onerror = (event: any) => {
-          console.error("Speech recognition error", event.error);
-          setIsListening(false);
-        };
+          recognitionRef.current.onend = () => {
+            setIsListening(false);
+            if (speechRecognizedRef.current && latestInputRef.current.trim()) {
+              handleSend(latestInputRef.current);
+            }
+          };
+          
+          recognitionRef.current.onerror = (event: any) => {
+            console.error("Speech recognition error", event.error);
+            setIsListening(false);
+          };
+        } catch (e) {
+          console.error("Failed to initialize SpeechRecognition:", e);
+        }
       }
     }
   }, []);
@@ -282,28 +229,24 @@ export default function ChatWidget({ isOpen: externalIsOpen, onToggle, currentRo
 
   // Proactive Start
   useEffect(() => {
-    if (!hasInitialized.current) {
-      hasInitialized.current = true;
+    // Send initial greeting when role or demo industry changes
+    setTimeout(() => {
+      let greeting = '';
+      if (demoIndustry === 'Dentist') {
+        greeting = "Hello! I'm Chloe, the Patient Concierge. How can I assist you with your smile today?";
+      } else if (demoIndustry === 'Interior Design') {
+        greeting = "Welcome. I'm your Design Consultant. Tell me a little about the space you're looking to transform.";
+      } else if (demoIndustry === 'MedSpa') {
+        greeting = "Hi there! I'm your Aesthetics Concierge. What treatments or concerns can I help you with today?";
+      } else {
+        greeting = agentRole === 'Strategist' 
+          ? "Oh, hi there! I'm Jessica the Lead Strategist here at SynapseHub. How's your day going so far? And how can i be at your service today?"
+          : (agentRole === 'SalesTech' ? "I am ready to begin your infrastructure audit." : "Welcome back, partner. How can I assist with your operations today?");
+      }
       
-      // Send initial greeting
-      setTimeout(() => {
-        let greeting = '';
-        if (demoIndustry === 'dental') {
-          greeting = "Hello! I'm Chloe, the Patient Concierge. How can I assist you with your smile today?";
-        } else if (demoIndustry === 'interior') {
-          greeting = "Welcome. I'm your Design Consultant. Tell me a little about the space you're looking to transform.";
-        } else if (demoIndustry === 'medspa') {
-          greeting = "Hi there! I'm your Aesthetics Concierge. What treatments or concerns can I help you with today?";
-        } else {
-          greeting = agentRole === 'Strategist' 
-            ? "Oh, hi there! I'm Jessica the Lead Strategist here at SynapseHub. How's your day going so far? And how can i be at your service today?"
-            : (agentRole === 'SalesTech' ? "I am ready to begin your infrastructure audit." : "Welcome back, partner. How can I assist with your operations today?");
-        }
-        
-        setMessages([{ role: 'model', text: greeting }]);
-        speakText(greeting);
-      }, 800);
-    }
+      setMessages([{ role: 'model', text: greeting }]);
+      speakText(greeting);
+    }, 800);
   }, [agentRole, demoIndustry]);
 
   const handleSend = async (textToSend?: string | React.MouseEvent | React.KeyboardEvent) => {
@@ -319,10 +262,21 @@ export default function ChatWidget({ isOpen: externalIsOpen, onToggle, currentRo
       if (!apiKey) throw new Error("API Key Missing");
 
       const ai = new GoogleGenAI({ apiKey });
+      let systemInstruction = '';
+      if (demoIndustry === 'Dentist') {
+        systemInstruction = "You are Chloe, Patient Concierge for Apex Dental. Your goal is to audit their tooth pain and book a $150 Clinical Assessment.";
+      } else if (demoIndustry === 'Interior Design') {
+        systemInstruction = "You are Mia, Design Concierge for LuxeSpace. Your goal is to audit their renovation timeline and book a $500 Blueprint Session.";
+      } else if (demoIndustry === 'MedSpa') {
+        systemInstruction = "You are Sophie, Aesthetic Concierge for Lumina Clinic. Your goal is to audit their skin concerns and book a $100 Consultation.";
+      } else {
+        systemInstruction = agentRole === 'Strategist' ? STRATEGIST_INSTRUCTIONS : (agentRole === 'SalesTech' ? SALESTECH_INSTRUCTIONS : SUCCESS_MANAGER_INSTRUCTIONS);
+      }
+
       const chat = ai.chats.create({
         model: 'gemini-3-flash-preview',
         config: {
-            systemInstruction: agentRole === 'Strategist' ? getStrategistInstructions(demoIndustry) : (agentRole === 'SalesTech' ? getSalesTechInstructions(demoIndustry) : SUCCESS_MANAGER_INSTRUCTIONS),
+            systemInstruction,
             tools: [{ functionDeclarations: [reviewBookingTool, submitStrategicBriefTool, logManagedTaskTool] }]
         },
         history: messages.map(m => ({
@@ -424,7 +378,11 @@ export default function ChatWidget({ isOpen: externalIsOpen, onToggle, currentRo
     setAgentRole('SuccessManager');
     // Persist Success Manager state
     if (typeof window !== 'undefined') {
-        localStorage.setItem('synapse_partner_status', 'active');
+        try {
+            localStorage.setItem('synapse_partner_status', 'active');
+        } catch (e) {
+            console.warn("localStorage setItem failed", e);
+        }
     }
     const msg = "Authorization received. Welcome to the partnership. I am your Success Manager. How can I assist you?";
     setMessages(prev => [...prev, { role: 'model', text: msg }]);
@@ -433,8 +391,14 @@ export default function ChatWidget({ isOpen: externalIsOpen, onToggle, currentRo
 
   // Check persistence on load
   useEffect(() => {
-      if (typeof window !== 'undefined' && localStorage.getItem('synapse_partner_status') === 'active') {
-          setAgentRole('SuccessManager');
+      if (typeof window !== 'undefined') {
+          try {
+              if (localStorage.getItem('synapse_partner_status') === 'active') {
+                  setAgentRole('SuccessManager');
+              }
+          } catch (e) {
+              console.warn("localStorage getItem failed", e);
+          }
       }
   }, []);
 
@@ -450,9 +414,11 @@ export default function ChatWidget({ isOpen: externalIsOpen, onToggle, currentRo
                   <Terminal className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-sm">SynapseHub Terminal</h3>
+                  <h3 className="font-bold text-white text-sm">
+                    {demoIndustry ? `${demoIndustry} AI Assistant` : 'SynapseHub Terminal'}
+                  </h3>
                   <p className="text-xs text-blue-400 font-mono uppercase tracking-wider">
-                    {agentRole === 'Strategist' ? 'Lead Strategist' : (agentRole === 'SalesTech' ? 'Sales Architect' : 'Success Manager')}
+                    {demoIndustry ? 'Demo Mode' : (agentRole === 'Strategist' ? 'Lead Strategist' : (agentRole === 'SalesTech' ? 'Sales Architect' : 'Success Manager'))}
                   </p>
                 </div>
               </div>

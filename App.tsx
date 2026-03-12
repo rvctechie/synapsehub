@@ -31,39 +31,59 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [selectedDemo, setSelectedDemo] = useState<string | undefined>(undefined);
   const [userStatus, setUserStatus] = useState<'Prospect' | 'ActivePartner'>(() => {
-    return (localStorage.getItem('userStatus') as 'ActivePartner') || 'Prospect';
+    try {
+      return (localStorage.getItem('userStatus') as 'ActivePartner') || 'Prospect';
+    } catch (e) {
+      console.warn("localStorage not available", e);
+      return 'Prospect';
+    }
   });
   const [showSuccessOverlay, setShowSuccessOverlay] = useState(false);
 
   useEffect(() => {
     // Check URL params for payment success
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('status') === 'paid') {
-      setUserStatus('ActivePartner');
-      localStorage.setItem('userStatus', 'ActivePartner');
-      setShowSuccessOverlay(true);
-      
-      // Clean URL
-      window.history.replaceState({}, '', window.location.pathname);
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('status') === 'paid') {
+        setUserStatus('ActivePartner');
+        try {
+          localStorage.setItem('userStatus', 'ActivePartner');
+        } catch (e) {
+          console.warn("localStorage setItem failed", e);
+        }
+        setShowSuccessOverlay(true);
+        
+        // Clean URL
+        window.history.replaceState({}, '', window.location.pathname);
 
-      // Hide overlay after 5 seconds and open chat
-      setTimeout(() => {
-        setShowSuccessOverlay(false);
-        setIsChatOpen(true);
-      }, 5000);
+        // Hide overlay after 5 seconds and open chat
+        setTimeout(() => {
+          setShowSuccessOverlay(false);
+          setIsChatOpen(true);
+        }, 5000);
+      }
+    } catch (e) {
+      console.error("Error processing URL params", e);
     }
   }, []);
 
   const navigateTo = (page: string) => {
     setCurrentPage(page);
     window.scrollTo(0, 0);
+    if (page !== 'demo') {
+      setSelectedDemo(undefined);
+    }
   };
 
   const handleAuthorize = () => {
     // Simulate payment flow for demo purposes
     // In production, this would redirect to Stripe/GHL
     setUserStatus('ActivePartner');
-    localStorage.setItem('userStatus', 'ActivePartner');
+    try {
+      localStorage.setItem('userStatus', 'ActivePartner');
+    } catch (e) {
+      console.warn("localStorage setItem failed", e);
+    }
     setShowSuccessOverlay(true);
     setTimeout(() => {
       setShowSuccessOverlay(false);

@@ -8,7 +8,7 @@ interface DemoPageProps {
 export default function DemoPage({ onSelectDemo }: DemoPageProps) {
   const industries = [
     {
-      id: 'dental',
+      id: 'Dentist',
       name: 'Luxury Dental Clinic',
       icon: <Stethoscope className="w-8 h-8 text-blue-400" />,
       description: 'Experience Chloe, the Patient Concierge, and Dr. Marcus, the Clinical Auditor.',
@@ -16,7 +16,7 @@ export default function DemoPage({ onSelectDemo }: DemoPageProps) {
       border: 'border-blue-500/30'
     },
     {
-      id: 'interior',
+      id: 'Interior Design',
       name: 'High-End Interior Design',
       icon: <Paintbrush className="w-8 h-8 text-purple-400" />,
       description: 'Interact with our Design Consultant AI to qualify high-ticket remodeling leads.',
@@ -24,7 +24,7 @@ export default function DemoPage({ onSelectDemo }: DemoPageProps) {
       border: 'border-purple-500/30'
     },
     {
-      id: 'medspa',
+      id: 'MedSpa',
       name: 'Medical Aesthetics (MedSpa)',
       icon: <Sparkles className="w-8 h-8 text-emerald-400" />,
       description: 'See how our Aesthetics Concierge books consultations and handles treatment FAQs.',

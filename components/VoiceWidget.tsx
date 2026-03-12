@@ -50,8 +50,8 @@ export default function VoiceWidget({ isOpen, onClose }: VoiceWidgetProps) {
   const mediaStreamRef = useRef<MediaStream | null>(null);
   const processorRef = useRef<ScriptProcessorNode | null>(null);
   const activeSessionRef = useRef<any>(null);
-  const audioQueueRef = useRef<Float32Array[]>([]);
-  const isPlayingRef = useRef(false);
+  const activeSourcesRef = useRef<AudioBufferSourceNode[]>([]);
+  const nextPlayTimeRef = useRef<number>(0);
 
   useEffect(() => {
     if (isOpen) {
@@ -72,10 +72,16 @@ export default function VoiceWidget({ isOpen, onClose }: VoiceWidgetProps) {
       
       // Initialize Audio Context with system default sample rate for stability
       const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioContextClass) {
+        throw new Error("AudioContext is not supported in this browser.");
+      }
       const audioContext = new AudioContextClass();
       audioContextRef.current = audioContext;
       
       // Start Microphone - Request 16kHz if possible, but handle whatever we get
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        throw new Error("Microphone access is not supported in this environment (requires HTTPS).");
+      }
       const stream = await navigator.mediaDevices.getUserMedia({ audio: {
         sampleRate: 16000,
         channelCount: 1,
@@ -97,6 +103,14 @@ export default function VoiceWidget({ isOpen, onClose }: VoiceWidgetProps) {
             setIsConnecting(false);
           },
           onmessage: async (message: LiveServerMessage) => {
+            if (message.serverContent?.interrupted) {
+              activeSourcesRef.current.forEach(s => {
+                try { s.stop(); } catch (e) {}
+              });
+              activeSourcesRef.current = [];
+              nextPlayTimeRef.current = 0;
+            }
+
             const base64Audio = message.serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
             if (base64Audio) {
               try {
@@ -111,8 +125,7 @@ export default function VoiceWidget({ isOpen, onClose }: VoiceWidgetProps) {
                   floatData[i] = pcmData[i] / 32768.0;
                 }
                 
-                audioQueueRef.current.push(floatData);
-                playAudioQueue();
+                scheduleAudio(floatData);
               } catch (e) {
                 console.error("Error processing audio message:", e);
               }
@@ -226,31 +239,40 @@ export default function VoiceWidget({ isOpen, onClose }: VoiceWidgetProps) {
       return result;
   };
 
-  const playAudioQueue = async () => {
-    if (isPlayingRef.current || audioQueueRef.current.length === 0 || !audioContextRef.current) return;
+  const scheduleAudio = (floatData: Float32Array) => {
+    if (!audioContextRef.current) return;
     
-    isPlayingRef.current = true;
-    const audioData = audioQueueRef.current.shift()!;
-    
-    // Gemini Output is typically 24000Hz
     const outputSampleRate = 24000;
-    
-    const outputBuffer = audioContextRef.current.createBuffer(1, audioData.length, outputSampleRate);
-    outputBuffer.getChannelData(0).set(audioData);
+    const outputBuffer = audioContextRef.current.createBuffer(1, floatData.length, outputSampleRate);
+    outputBuffer.getChannelData(0).set(floatData);
     
     const source = audioContextRef.current.createBufferSource();
     source.buffer = outputBuffer;
     source.connect(audioContextRef.current.destination);
+    
+    const currentTime = audioContextRef.current.currentTime;
+    if (nextPlayTimeRef.current < currentTime) {
+      nextPlayTimeRef.current = currentTime;
+    }
+    
+    source.start(nextPlayTimeRef.current);
+    nextPlayTimeRef.current += outputBuffer.duration;
+    
     source.onended = () => {
-      isPlayingRef.current = false;
-      playAudioQueue();
+      activeSourcesRef.current = activeSourcesRef.current.filter(s => s !== source);
     };
-    source.start();
+    activeSourcesRef.current.push(source);
   };
 
   const stopSession = () => {
     setIsConnected(false);
     setIsConnecting(false);
+    
+    activeSourcesRef.current.forEach(s => {
+      try { s.stop(); } catch (e) {}
+    });
+    activeSourcesRef.current = [];
+    nextPlayTimeRef.current = 0;
     
     if (processorRef.current) {
       processorRef.current.disconnect();
