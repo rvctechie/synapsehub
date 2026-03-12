@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
-export default function Navbar() {
+interface NavbarProps {
+  onNavigate: (page: string) => void;
+}
+
+export default function Navbar({ onNavigate }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -17,7 +21,7 @@ export default function Navbar() {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-slate-950/90 backdrop-blur-md shadow-lg border-b border-slate-800 py-3' : 'bg-transparent py-5'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => onNavigate('home')}>
             {/* SynapseHub Logo */}
             <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="logo-3d-spin">
                <defs>
@@ -47,10 +51,10 @@ export default function Navbar() {
           </div>
 
           <div className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-sm font-bold text-slate-300 hover:text-white transition-colors">Features</a>
-            <a href="#pricing" className="text-sm font-bold text-slate-300 hover:text-white transition-colors">Pricing</a>
-            <a href="#demo" className="text-sm font-bold text-slate-300 hover:text-white transition-colors">AI Demo</a>
-            <a href="#" className="text-sm font-bold text-slate-300 hover:text-white transition-colors">Login</a>
+            <button onClick={() => onNavigate('automate')} className="text-sm font-bold text-slate-300 hover:text-white transition-colors">Managed Solutions</button>
+            <button onClick={() => onNavigate('pricing')} className="text-sm font-bold text-slate-300 hover:text-white transition-colors">Partnerships</button>
+            <button onClick={() => onNavigate('home')} className="text-sm font-bold text-slate-300 hover:text-white transition-colors">Infrastructure Preview</button>
+            <button className="text-sm font-bold text-slate-300 hover:text-white transition-colors">Partner Portal</button>
           </div>
 
           <button className="md:hidden text-slate-300" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -62,11 +66,11 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-slate-900 border-b border-slate-800 shadow-xl p-4 flex flex-col gap-4">
-          <a href="#features" className="text-base font-bold text-slate-300 py-2" onClick={() => setIsMobileMenuOpen(false)}>Features</a>
-          <a href="#pricing" className="text-base font-bold text-slate-300 py-2" onClick={() => setIsMobileMenuOpen(false)}>Pricing</a>
-          <a href="#demo" className="text-base font-bold text-slate-300 py-2" onClick={() => setIsMobileMenuOpen(false)}>AI Demo</a>
+          <button onClick={() => { onNavigate('automate'); setIsMobileMenuOpen(false); }} className="text-base font-bold text-slate-300 py-2 text-left">Managed Solutions</button>
+          <button onClick={() => { onNavigate('pricing'); setIsMobileMenuOpen(false); }} className="text-base font-bold text-slate-300 py-2 text-left">Partnerships</button>
+          <button onClick={() => { onNavigate('home'); setIsMobileMenuOpen(false); }} className="text-base font-bold text-slate-300 py-2 text-left">Infrastructure Preview</button>
           <hr className="border-slate-800" />
-          <a href="#" className="text-base font-bold text-slate-300 py-2">Login</a>
+          <button className="text-base font-bold text-slate-300 py-2 text-left">Partner Portal</button>
         </div>
       )}
     </nav>

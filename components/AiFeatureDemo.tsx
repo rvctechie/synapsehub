@@ -64,18 +64,18 @@ export default function AiFeatureDemo() {
               <Sparkles className="w-4 h-4" /> AI Automation
             </div>
             <h2 className="text-4xl font-bold text-white mb-6">
-              Generate High-Converting Ads in Seconds
+              Managed High-Converting Content Generation
             </h2>
             <p className="text-lg text-slate-400 mb-8 leading-relaxed">
-              Don't hire expensive copywriters. Our built-in "Content AI" uses advanced models to write email sequences, ad copy, and social posts for you and your clients instantly.
+              Stop worrying about copy. Our team manages your "Content AI" infrastructure, training models specifically for your niche to generate email sequences, ad copy, and social posts that actually convert.
             </p>
             
             <ul className="space-y-4 mb-8">
               {[
-                "Instant content generation for any industry",
-                "SEO-optimized website copy",
-                "Personalized cold outreach emails",
-                "One-click social media captions"
+                "Managed content strategy for any industry",
+                "Managed SEO-optimized website copy",
+                "Managed personalized cold outreach emails",
+                "Managed social media caption systems"
               ].map((item, i) => (
                 <li key={i} className="flex items-center gap-3 text-slate-300 font-medium">
                   <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 flex-shrink-0 border border-green-500/20">
@@ -90,8 +90,11 @@ export default function AiFeatureDemo() {
           {/* Right Side: Interactive Card */}
           <div className="bg-slate-900 p-8 rounded-2xl shadow-2xl border border-slate-800 relative">
             <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-              Try Content AI <span className="text-xs bg-slate-800 border border-slate-700 text-slate-400 px-2 py-0.5 rounded">BETA</span>
+              Managed Infrastructure Preview <span className="text-xs bg-slate-800 border border-slate-700 text-slate-400 px-2 py-0.5 rounded">LIVE OPS</span>
             </h3>
+            <p className="text-sm text-slate-400 mb-6">
+              This interactive preview demonstrates our automated content engine. In a full partnership, our team manages the training and deployment of these models specifically for your brand's voice and operational goals.
+            </p>
             
             <form onSubmit={handleGenerate} className="space-y-4">
               <div>

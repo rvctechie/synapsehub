@@ -1,53 +1,53 @@
 import React from 'react';
-import { MessageSquare, Calendar, Star, PhoneMissed, Layout, BarChart3, Smartphone } from 'lucide-react';
+import { Radio, Workflow, ShieldCheck, Clock, Layers, TabletSmartphone, LineChart, Bot } from 'lucide-react';
 
 const features = [
   {
-    icon: <MessageSquare className="w-6 h-6 text-white" />,
-    title: "Unified Inbox",
-    description: "Stop logging into 5 apps. Manage Facebook, Instagram, Google Chat, SMS, and Emails in one single conversation stream.",
+    icon: <Radio className="w-6 h-6 text-white" />,
+    title: "Managed Communication Hub",
+    description: "We consolidate and manage your Facebook, Instagram, Google Chat, SMS, and Emails into one single, high-efficiency conversation stream.",
     color: "bg-blue-600"
   },
   {
-    icon: <PhoneMissed className="w-6 h-6 text-white" />,
-    title: "Missed Call Text-Back",
-    description: "Our system automatically texts back leads who call when you're busy, ensuring you never lose a customer to a competitor.",
+    icon: <Workflow className="w-6 h-6 text-white" />,
+    title: "Automated Lead Recovery",
+    description: "Our managed systems automatically engage leads who call when you're busy, ensuring no opportunity is lost to a competitor.",
     color: "bg-rose-600"
   },
   {
-    icon: <Star className="w-6 h-6 text-white" />,
-    title: "Reputation Management",
-    description: "Automate Google Review requests. Boost your local ranking and build trust on autopilot without lifting a finger.",
+    icon: <ShieldCheck className="w-6 h-6 text-white" />,
+    title: "Managed Brand Reputation",
+    description: "We oversee your Google Review strategy, automating requests and managing responses to boost your local ranking and trust.",
     color: "bg-yellow-600"
   },
   {
-    icon: <Calendar className="w-6 h-6 text-white" />,
-    title: "AI Booking Calendar",
-    description: "Replace Calendly. Let clients book appointments directly on your site. Automated reminders reduce no-shows by 80%.",
+    icon: <Clock className="w-6 h-6 text-white" />,
+    title: "Managed Appointment Systems",
+    description: "We build and maintain custom booking systems with managed reminder sequences that reduce no-shows by up to 80%.",
     color: "bg-emerald-600"
   },
   {
-    icon: <Layout className="w-6 h-6 text-white" />,
-    title: "Funnels & Websites",
-    description: "Drag-and-drop builder for high-converting landing pages. Host courses, memberships, and client portals.",
+    icon: <Layers className="w-6 h-6 text-white" />,
+    title: "Strategic Funnel Management",
+    description: "Professional design and technical management of high-converting landing pages, course portals, and client areas.",
     color: "bg-purple-600"
   },
   {
-    icon: <Smartphone className="w-6 h-6 text-white" />,
-    title: "Mobile App Access",
-    description: "Run your business from your pocket. Reply to leads, check appointments, and send invoices on the go.",
+    icon: <TabletSmartphone className="w-6 h-6 text-white" />,
+    title: "Real-Time Operations Portal",
+    description: "Access your managed business infrastructure from anywhere. Monitor leads, appointments, and invoices on the go.",
     color: "bg-indigo-600"
   },
   {
-    icon: <BarChart3 className="w-6 h-6 text-white" />,
-    title: "Pipelines & Analytics",
-    description: "Visual sales pipelines help you track every opportunity. Know exactly where your money is coming from.",
+    icon: <LineChart className="w-6 h-6 text-white" />,
+    title: "Managed Sales Intelligence",
+    description: "We architect visual sales pipelines and provide deep-dive analytics so you know exactly where your growth is coming from.",
     color: "bg-cyan-600"
   },
   {
-    icon: <MessageSquare className="w-6 h-6 text-white" />,
-    title: "Conversation AI",
-    description: "Train our AI bot to answer FAQs and book appointments for you 24/7, even while you sleep.",
+    icon: <Bot className="w-6 h-6 text-white" />,
+    title: "Managed AI Support Agents",
+    description: "We train and oversee custom AI agents that handle FAQs and book appointments for you 24/7 with human-like precision.",
     color: "bg-pink-600"
   }
 ];
@@ -57,10 +57,10 @@ export default function Features() {
     <section id="features" className="py-24 bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-blue-500 font-bold tracking-wide uppercase text-sm mb-2">Platform Capabilities</h2>
-          <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">The Toolkit for Modern Business</h3>
+          <h2 className="text-blue-500 font-bold tracking-wide uppercase text-sm mb-2">The Managed Advantage</h2>
+          <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Operational Excellence, Delivered</h3>
           <p className="text-lg text-slate-400">
-             We combined the functionality of 10+ separate tools into one streamlined dashboard.
+             We don't just provide technical systems. We provide the managed infrastructure and technical expertise to scale your business.
           </p>
         </div>
 
@@ -74,6 +74,12 @@ export default function Features() {
               <p className="text-slate-400 text-sm leading-relaxed mb-4 flex-grow">
                 {feature.description}
               </p>
+              <div className="pt-4 border-t border-slate-800/50 mt-auto">
+                <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Full Technical Management Included
+                </span>
+              </div>
             </div>
           ))}
         </div>

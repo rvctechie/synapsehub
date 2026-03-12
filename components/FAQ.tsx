@@ -4,27 +4,27 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 const faqs = [
   {
     question: "What is SynapseHub?",
-    answer: "SynapseHub is an all-in-one CRM and marketing automation platform designed specifically for companies to manage leads, automate follow-ups, and scale their business without juggling multiple tools."
+    answer: "SynapseHub is a Managed Operations Service (MOS) that handles the technical heavy lifting of your marketing and sales infrastructure. We don't just give you technical systems; our team builds, manages, and optimizes your entire growth engine for you."
   },
   {
-    question: "Can I replace my current CRM?",
-    answer: "Absolutely. SynapseHub includes a full-featured CRM, pipeline management, email marketing, SMS automation, and funnel builder. Most of our users replace 3-5 other software subscriptions."
+    question: "How is this different from a standard CRM?",
+    answer: "Standard CRMs are 'Do-It-Yourself' systems. SynapseHub is 'Done-For-You.' We architect your pipelines, build your funnels, and manage your AI agents. You focus on closing deals while we handle the operational complexity."
   },
   {
     question: "Is there a setup fee?",
-    answer: "No, there are no setup fees. You can start your 14-day free trial immediately and access all features based on your chosen plan."
+    answer: "Yes. Each tier includes a one-time Implementation & Onboarding Fee. This covers the custom architecture of your systems, data migration, and the strategic setup of your managed workflows to ensure immediate ROI."
   },
   {
-    question: "Do you offer support?",
-    answer: "Yes! We offer 24/7 chat support for all plans. The Unlimited and SaaS plans also include priority support options to ensure your company never faces downtime."
+    question: "Who manages the AI and automations?",
+    answer: "Our in-house technical team handles everything. We train your AI support agents, monitor your automation performance, and make strategic adjustments to your workflows as your business scales."
   },
   {
-    question: "Can I cancel anytime?",
-    answer: "Yes, there are no long-term contracts. You can cancel your subscription at any time from your dashboard with just a few clicks."
+    question: "Can I still access the infrastructure myself?",
+    answer: "Absolutely. You have full access to your Real-Time Operations Portal to monitor leads, view analytics, and communicate with clients. We manage the 'back-end' so your 'front-end' experience is seamless."
   },
   {
-    question: "Is it GDPR compliant?",
-    answer: "Yes, SynapseHub is fully GDPR compliant. We take data security seriously and provide all the tools you need to manage your clients' data responsibly."
+    question: "What kind of support is included?",
+    answer: "We provide proactive management rather than just reactive support. Depending on your tier, you'll have access to our strategic oversight team, priority technical assistance, and regular performance optimization calls."
   }
 ];
 

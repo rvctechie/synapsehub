@@ -3,9 +3,11 @@ import { ChevronRight } from 'lucide-react';
 
 interface HeroProps {
   onOpenChat?: () => void;
+  onOpenRoadmap?: () => void;
+  onOpenVoice?: () => void;
 }
 
-export default function Hero({ onOpenChat }: HeroProps) {
+export default function Hero({ onOpenChat, onOpenRoadmap, onOpenVoice }: HeroProps) {
   return (
     <section className="relative pt-40 pb-32 lg:pt-48 lg:pb-40 overflow-hidden bg-slate-950">
       {/* Sophisticated Background */}
@@ -22,42 +24,49 @@ export default function Hero({ onOpenChat }: HeroProps) {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
           </span>
-          <span className="text-white">New Release:</span> AI Workflow Builder 2.0
+          <span className="text-white">New Service:</span> Managed AI Operations
           <ChevronRight className="w-3 h-3 text-slate-500 group-hover:text-white transition-colors" />
         </div>
         
         {/* Main Headline */}
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight mb-8 leading-[1.1]">
-          Automate Business. <br className="hidden md:block"/>
+          Managed Operations. <br className="hidden md:block"/>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-emerald-400 animate-gradient-x">Scale Faster.</span>
         </h1>
         
         {/* Subheadline */}
         <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-400 mb-12 leading-relaxed font-light">
-          The all-in-one platform to manage your leads, sales pipeline, and customer communication. Replace 10+ tools with one powerful dashboard.
+          Your dedicated operations department. We build, manage, and optimize your entire business infrastructure so you can focus on high-level growth.
         </p>
         
         {/* CTA Area */}
-        <div className="flex justify-center items-center">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
           
           {/* Enhanced Talk Now Widget - Centered & Larger */}
           <button 
-            onClick={onOpenChat}
+            onClick={onOpenVoice}
             className="relative pl-3 pr-10 py-3 bg-slate-900/80 backdrop-blur-md text-white border border-slate-700 hover:border-blue-500/50 rounded-2xl font-medium transition-all duration-300 flex items-center gap-5 group hover:bg-slate-800 hover:shadow-[0_0_40px_rgba(59,130,246,0.2)] hover:-translate-y-1"
           >
             <div className="relative">
                 <img 
                     src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
-                    alt="Support Agent"
+                    alt="Ops Lead"
                     className="w-20 h-20 rounded-xl border-2 border-slate-600 group-hover:border-blue-400 transition-colors object-cover shadow-2xl" 
                 />
                 <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-emerald-500 border-4 border-slate-900 rounded-full animate-pulse shadow-[0_0_15px_rgba(16,185,129,0.6)]"></span>
             </div>
             <div className="text-left flex flex-col justify-center">
-                <span className="text-xs text-emerald-400 font-bold uppercase tracking-widest leading-none mb-2">Online Now</span>
-                <span className="leading-none text-2xl group-hover:text-blue-200 transition-colors font-bold tracking-tight">Talk to Support</span>
-                <span className="text-slate-400 text-sm mt-1 group-hover:text-slate-300">Wait time: &lt; 1 min</span>
+                <span className="text-xs text-emerald-400 font-bold uppercase tracking-widest leading-none mb-2">Managed Operations</span>
+                <span className="leading-none text-2xl group-hover:text-blue-200 transition-colors font-bold tracking-tight">AI Voice Support</span>
+                <span className="text-slate-400 text-sm mt-1 group-hover:text-slate-300">Direct Access</span>
             </div>
+          </button>
+
+          <button 
+            onClick={onOpenRoadmap}
+            className="px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 hover:bg-slate-800/50 transition-all font-medium flex items-center gap-2 group"
+          >
+            View Growth Roadmap <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
       </div>

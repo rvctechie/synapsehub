@@ -12,7 +12,7 @@ export default function AiEmployees() {
         {/* Section 1: Value Props Grid */}
         <div className="text-center max-w-5xl mx-auto mb-24">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-16">
-            Replace your fragmented tech stack.
+            Replace your fragmented operations.
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
@@ -68,14 +68,14 @@ export default function AiEmployees() {
                  <div className="w-20 h-20 mx-auto rounded-full bg-blue-900/20 border border-blue-500/30 flex items-center justify-center mb-6 text-blue-400">
                     <Magnet className="w-8 h-8" />
                  </div>
-                 <h3 className="text-xl font-bold text-white mb-3">1. Capture</h3>
+                 <h3 className="text-xl font-bold text-white mb-3">1. Managed Lead Acquisition</h3>
                  <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                   Capture leads using our high-converting landing pages, surveys, forms, and inbound phone system.
+                   We deploy and manage high-converting acquisition systems, including custom landing pages, strategic surveys, and optimized inbound phone routing.
                  </p>
                  <ul className="text-xs text-slate-500 space-y-2 text-left bg-slate-900/50 p-4 rounded-lg">
-                    <li>• Drag & Drop Builder</li>
-                    <li>• Booking Calendars</li>
-                    <li>• WordPress Hosting</li>
+                    <li>• Strategic Funnel Design & Maintenance</li>
+                    <li>• Managed Appointment Booking Systems</li>
+                    <li>• Managed Enterprise Hosting & Security</li>
                  </ul>
               </div>
 
@@ -84,14 +84,14 @@ export default function AiEmployees() {
                  <div className="w-20 h-20 mx-auto rounded-full bg-purple-900/20 border border-purple-500/30 flex items-center justify-center mb-6 text-purple-400">
                     <MessageCircle className="w-8 h-8" />
                  </div>
-                 <h3 className="text-xl font-bold text-white mb-3">2. Nurture</h3>
+                 <h3 className="text-xl font-bold text-white mb-3">2. Managed Automated Engagement</h3>
                  <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                   Automatically message leads via voicemail, forced calls, SMS, emails, and FB Messenger.
+                   Our team architects and oversees multi-channel engagement sequences across SMS, Email, and Social, ensuring no lead is ever left behind.
                  </p>
                  <ul className="text-xs text-slate-500 space-y-2 text-left bg-slate-900/50 p-4 rounded-lg">
-                    <li>• AI Conversation Bot</li>
-                    <li>• Multi-channel Campaigns</li>
-                    <li>• Pipeline Management</li>
+                    <li>• Managed AI Support Agents</li>
+                    <li>• Strategic Multi-channel Campaigns</li>
+                    <li>• Managed Sales Pipeline Operations</li>
                  </ul>
               </div>
 
@@ -100,14 +100,14 @@ export default function AiEmployees() {
                  <div className="w-20 h-20 mx-auto rounded-full bg-emerald-900/20 border border-emerald-500/30 flex items-center justify-center mb-6 text-emerald-400">
                     <CreditCard className="w-8 h-8" />
                  </div>
-                 <h3 className="text-xl font-bold text-white mb-3">3. Close</h3>
+                 <h3 className="text-xl font-bold text-white mb-3">3. Managed Conversion & Sales Ops</h3>
                  <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                   Use our built-in tools to collect payments, schedule appointments, and track analytics.
+                   We handle the technical execution of your sales operations, managing payments, automated invoicing, and contract delivery to accelerate your cash flow.
                  </p>
                  <ul className="text-xs text-slate-500 space-y-2 text-left bg-slate-900/50 p-4 rounded-lg">
-                    <li>• Stripe & PayPal Integration</li>
-                    <li>• Reputation Management</li>
-                    <li>• Advanced Reporting</li>
+                    <li>• Managed Payment & Finance Integration</li>
+                    <li>• Automated Invoicing & Contract Ops</li>
+                    <li>• Strategic Performance Reporting</li>
                  </ul>
               </div>
            </div>
