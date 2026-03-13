@@ -231,9 +231,7 @@ export default function App() {
       <ChatWidget 
         isOpen={isChatOpen} 
         onToggle={setIsChatOpen} 
-        currentRoute={currentPage} 
         userStatus={userStatus}
-        onAuthorize={handleAuthorize}
         demoIndustry={selectedDemo}
       />
       <VoiceWidget

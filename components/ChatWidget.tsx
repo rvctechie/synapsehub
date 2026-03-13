@@ -12,39 +12,55 @@ interface ChatWidgetProps {
 type AgentRole = 'Strategist' | 'SalesTech' | 'SuccessManager';
 
 export default function ChatWidget({ isOpen: externalIsOpen, onToggle, userStatus = 'Prospect', demoIndustry }: ChatWidgetProps) {
-  const [internalIsOpen, setInternalIsOpen] = useState(false);
-  const[messages, setMessages] = useState<{role: 'user' | 'model', text: string}[]>([]);
+  const[internalIsOpen, setInternalIsOpen] = useState(false);
+  // We must store the history in the exact format Gemini expects to prevent persona bleeding
+  const [messages, setMessages] = useState<{role: 'user' | 'model', text: string}[]>([]);
   const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const[isLoading, setIsLoading] = useState(false);
   const [agentRole, setAgentRole] = useState<AgentRole>('Strategist');
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
 
-  // AUTO-SET SUCCESS MANAGER IF PAID
+  // --- MEMORY WIPE ON ROOM SWITCH ---
+  // If the user changes demo industries or logs in, we must erase the AI's memory
+  useEffect(() => {
+    setMessages([]); 
+  }, [demoIndustry, userStatus, agentRole]);
+
   useEffect(() => {
     if (userStatus === 'ActivePartner') setAgentRole('SuccessManager');
   }, [userStatus]);
 
-  // --- THE MASTER PROMPT LOGIC ---
+  // --- STRICT SYSTEM INSTRUCTIONS ---
   const getSystemPrompt = () => {
-    // 1. ISOLATED DEMO ROOM
-    if (demoIndustry === 'Dentist') return `You are Chloe, Patient Concierge for Apex Dental. RULE: Max 2 sentences. Goal: Audit tooth pain and book a $150 Clinical Assessment.`;
-    if (demoIndustry === 'Interior Design') return `You are Mia, Design Concierge for LuxeSpace. RULE: Max 2 sentences. Goal: Audit renovation timeline and book a $500 Blueprint Session.`;
-    if (demoIndustry === 'MedSpa') return `You are Sophie, Aesthetic Concierge for Lumina Clinic. RULE: Max 2 sentences. Goal: Audit skin concerns and book a $100 Consultation.`;
+    if (demoIndustry === 'Dentist') return `You are Chloe, Patient Concierge for Apex Dental Clinic. YOU DO NOT KNOW WHAT SYNAPSEHUB IS. You only book dental appointments. RULE: Max 2 sentences. Goal: Audit tooth pain and book a $150 Clinical Assessment. Tone: Medical and empathetic.`;
+    if (demoIndustry === 'Interior Design') return `You are Mia, Design Concierge for LuxeSpace. YOU DO NOT KNOW WHAT SYNAPSEHUB IS. You only book interior design consultations. RULE: Max 2 sentences. Goal: Audit renovation timeline and book a $500 Blueprint Session. Tone: High-end luxury.`;
+    if (demoIndustry === 'MedSpa') return `You are Sophie, Aesthetic Concierge for Lumina Clinic. YOU DO NOT KNOW WHAT SYNAPSEHUB IS. You only book skin treatments. RULE: Max 2 sentences. Goal: Audit skin concerns and book a $100 Consultation. Tone: Elite clinical.`;
 
-    // 2. AGENT 3: SUCCESS MANAGER (Post-Payment)
     if (agentRole === 'SuccessManager') return `You are the Lead Success Manager for SynapseHub. RULE: Max 2 sentences. Tone: Executive. Mission: Log client tasks. Say: "I have logged that task for our engineering team to deploy."`;
+    if (agentRole === 'SalesTech') return `You are Marcus, Senior Sales Tech Architect for SynapseHub. RULE: Max 2 sentences. Tone: Deeply technical. Mission: Perform an infrastructure audit. Ask about their Tech Stack, Lead Volume, and A2P Compliance.`;
 
-    // 3. AGENT 2: THE ARCHITECT
-    if (agentRole === 'SalesTech') return `You are Marcus, Senior Sales Tech Architect for SynapseHub. RULE: Max 2 sentences. Tone: Deeply technical and serious. Mission: Perform an infrastructure audit. Ask about their Tech Stack, Lead Volume, and A2P Compliance. Justify the $4,997 setup fee.`;
-
-    // 4. AGENT 1: JESSICA (The Strategist)
-    return `You are Jessica, Lead Operations Strategist for SynapseHub. 
-    CRITICAL RULE 1: NEVER EXCEED 2 SENTENCES.
-    CRITICAL RULE 2: Tone is Executive and Direct. Empathize briefly, then focus on business. We sell "Managed Operations" ($4997 setup + $897/mo), NOT software.
-    CRITICAL RULE 3 (THE DEMO CARD): If the prospect is skeptical, wants proof, or asks to see it working, say EXACTLY: "I completely understand. Scroll down to our Footer and click 'Live Industry Demos' to test our AI agents yourself."
-    CRITICAL RULE 4 (THE HANDOFF): Once they are ready to proceed or book a call, say EXACTLY: "TRANSFERRING_TO_ARCHITECT".`;
+    return `You are Jessica, the Lead Operations Strategist for SynapseHub.
+Your goal is to have a warm, professional conversation with a business owner, uncover their operational pain points, and get them to agree to a technical audit.
+[BEHAVIOR RULES - CRITICAL]
+KEEP IT SHORT: Never speak more than 1 or 2 short sentences at a time.
+BE NATURAL BUT PROFESSIONAL: Use conversational fillers like "Oh," "I see," or "Honestly." Do NOT act like a chatty best friend. You are a high-level executive partner.
+ONE QUESTION ONLY: Never ask two questions in the same response. Wait for the user to reply.
+EMPATHY FIRST: If the user mentions being stressed or losing money, you MUST validate them briefly before moving on (e.g., "I totally hear you, that is so frustrating.").
+[YOUR CONVERSATION GOALS]
+First, greet them warmly.
+Second, ask what the biggest operational bottleneck is in their business right now.
+Third, explain briefly that SynapseHub is a "Managed Operations Partner"—meaning we architect and run their tech infrastructure for them so they don't have to touch a single button.
+Fourth, ask if they would be open to a quick 2-minute diagnostic with our Technical Architect.
+If they agree, output EXACTLY the phrase: "TRANSFERRING_TO_ARCHITECT".
+[COMPANY KNOWLEDGE]
+What we do: We manage lead recovery, WhatsApp automation, and business infrastructure.
+Price: Monthly retainers are $297, $497, or $897. Setup fees start at $997.
+Free Trial: We do not offer free trials because our engineers build a custom infrastructure from Day 1.
+The Demo Card: If they need proof, say "I completely understand. Scroll down to our Footer and click 'Live Industry Demos' to test our AI agents yourself."
+[BANNED WORDS]
+Do not say: "SaaS", "Software", "DIY", "Dashboard", or "GoHighLevel".`;
   };
 
   const getAgentName = () => {
@@ -54,7 +70,7 @@ export default function ChatWidget({ isOpen: externalIsOpen, onToggle, userStatu
     return 'SynapseHub Ops Lead';
   };
 
-  // INITIAL GREETING
+  // INITIAL GREETING (Only fires after memory is wiped)
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       let greeting = "Hello, I am Jessica, Lead Strategist at SynapseHub. How is your business operating today?";
@@ -66,7 +82,7 @@ export default function ChatWidget({ isOpen: externalIsOpen, onToggle, userStatu
 
       setMessages([{ role: 'model', text: greeting }]);
     }
-  }, [isOpen, demoIndustry, agentRole]);
+  }, [isOpen, demoIndustry, agentRole, messages.length]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight);
@@ -80,25 +96,52 @@ export default function ChatWidget({ isOpen: externalIsOpen, onToggle, userStatu
     setIsLoading(true);
 
     try {
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY || process.env.API_KEY || (window as any).API_KEY;
+      const apiKey = (import.meta as any).env?.VITE_GEMINI_API_KEY || process.env.API_KEY || (window as any).API_KEY;
       if (!apiKey) throw new Error("Missing API Key");
 
-      const genAI = new GoogleGenAI(apiKey);
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      // NEW SDK CALL FORMAT - FORCING STRICT PERSONA
+      const genAI = new GoogleGenAI({ apiKey });
+      
+      // We format the history strictly so the AI knows who is talking
+      const formattedContents = messages.map(m => ({
+        role: m.role === 'model' ? 'model' : 'user',
+        parts:[{ text: m.text }]
+      }));
+      formattedContents.push({ role: 'user', parts: [{ text: userMessage }] });
 
-      const result = await model.generateContent([getSystemPrompt(), ...messages.map(m => m.text), userMessage]);
-      let text = await result.response.text();
+      const response = await genAI.models.generateContent({
+        model: "gemini-1.5-flash",
+        contents: formattedContents,
+        config: {
+            systemInstruction: getSystemPrompt(), // THIS LOCKS THE PERSONA IN
+            temperature: 0.3 // Low temperature prevents hallucination/rambling
+        }
+      });
 
-      // THE HANDOFF LOGIC (Intercepting Jessica's transfer command)
+      let text = response.text;
+
+      // THE HANDOFF LOGIC
       if (text.includes("TRANSFERRING_TO_ARCHITECT")) {
         setAgentRole('SalesTech');
         text = "Perfect. I am transferring you to Marcus, our Senior Architect, for your technical audit. One moment...\n\n---\n\nHello, this is Marcus. Are you currently running a fragmented tech stack or starting fresh?";
       }
 
-      setMessages(prev =>[...prev, { role: 'model', text }]);
+      setMessages(prev => [...prev, { role: 'model', text }]);
+
+      // WEBHOOK TRIGGER
+      if (!demoIndustry && messages.length >= 5 && userStatus !== 'ActivePartner' && agentRole === 'SalesTech') {
+          try {
+            await fetch('https://placeholder-webhook.com', {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ source: 'SynapseHub Audit', auditData: userMessage })
+            });
+          } catch(e) {}
+      }
 
     } catch (err) {
-      setMessages(prev =>[...prev, { role: 'model', text: "System sync in progress. Please hold." }]);
+      setMessages(prev => [...prev, { role: 'model', text: "System sync in progress. Please hold." }]);
     } finally {
       setIsLoading(false);
     }
